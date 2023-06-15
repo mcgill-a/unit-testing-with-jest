@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",                          
+    "module": "commonjs",                    
+    "lib": ["es6"],                     
+    "allowJs": false,
+    "outDir": "build",                          
+    "rootDir": "src",
+    "strict": true,         
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@unit-testing": ["src/unit-testing/index.ts"]
+    }
+  },
+  "exclude": [
+    "./build/**/*"
+  ],
+}

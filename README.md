@@ -66,6 +66,7 @@ For each chapter, please:
 -   Look at the `"source code"` file
 -   Look at the `"tests"` file
 -   Update the unit tests (and sometimes source code 👀) to get 100% code coverage in the `"tests"` file
+-   **and make sure all the tests pass!!**
 
 Pro tip: You can view this `README.md` file in VS Code using the right click file option `"Open Preview"`
 
@@ -180,8 +181,22 @@ describe('AnExample', () => {
         user = mockUser();
     });
 
+    // or (preferrably) put it directly in the test, where
+    // you'll set the user there and be able to easily
+    // compare it in the expect
+    it('should', () => {
+        const user = mockUser();
+        component.setUser(user);
+        expect(component.user).toEqual(user);
+    })
+
     function mockUser(): User {
         return <User>{ id: 'foo', ... };
+    }
+
+    // or make the mock function more flexible by passing in params
+    function mockUser(nationality: string) {
+        return <User>{id: 'foo', name: 'bar', nationality, ...}
     }
 });
 ```
@@ -218,6 +233,8 @@ Update the test file so that:
 
 -   The data is reset between each test
 -   It uses mock functions to setup mocks
+-   The tests pass (they currently fail)
+-   Be careful, the functions may throw an error so your tests should account for this!!
 
 [source code](/src/d/component.ts) | [tests](/src/d/component.spec.ts)
 
@@ -243,14 +260,14 @@ jest.spyOn(console, 'log').mockImplementation(() => null);
 
 ## F) What if I want to compare part of an object, not the whole thing?
 
-[Have a look at what else you can do with `expect()`](https://jestjs.io/docs/expect#asymmetric-matchers) - quite a lot!
+[Have a look at what else you can do with `expect`](https://jestjs.io/docs/expect#asymmetric-matchers) - quite a lot!
 
 -   It's not just for checking if A equals B
 -   For example, you can check _part_ of an object, using `expect().objectContaining({..})`
 
 ```typescript
 const result = { hello: 'world', foo: 'bar' };
-expect(result).toEqual(expect().objectContaining({ foo: 'bar' }));
+expect(result).toEqual(expect.objectContaining({ foo: 'bar' }));
 ```
 
 For this question, let's not check the things we can't control (`id` and `date`)
@@ -275,6 +292,17 @@ The component:
 -   is able to toggle the column group expanded state
 
 There's a few more moving parts here compared to the previous questions.
+
+Side note, if we:
+
+-   are expecting a function to do nothing (return early)
+-   don't have anything else to check whether something has been called
+
+then just use a `.not.toThrow()`, like so:
+
+```typescript
+expect(() => component.myFunction()).not.toThrow()`
+```
 
 Let's see what you can do 💪
 

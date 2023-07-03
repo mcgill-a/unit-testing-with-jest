@@ -1,19 +1,22 @@
-export type Status = 'started' | 'stopped';
+export enum Status {
+    started,
+    stopped
+}
 
 export class Engine {
-    private _status: Status = 'stopped';
+    private _status: Status = Status.stopped;
 
-    public get status(): 'started' | 'stopped' {
+    public get status(): Status {
         return this._status;
     }
 
     public start(): void {
-        this._status = 'started';
+        this._status = Status.started;
         console.log('starting');
     }
 
     public stop(): void {
-        this._status = 'stopped';
+        this._status = Status.stopped;
         console.log('stopping');
     }
 }

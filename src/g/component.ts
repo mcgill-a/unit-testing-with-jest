@@ -1,10 +1,12 @@
+export interface ColumnApi {
+    isExpandable: () => boolean;
+    isExpanded: () => boolean;
+    setExpanded: (expanded: boolean) => void;
+}
+
 export interface ColumnHeaderParams {
     headerName: string;
-    api: {
-        isExpandable: () => boolean;
-        isExpanded: () => boolean;
-        setExpanded: (expanded: boolean) => void;
-    };
+    api: ColumnApi;
 }
 
 export interface ColumnHeader {
